@@ -116,7 +116,7 @@ public class SudokuSolver {
         int cell = (9*r) + c;
         int row = 81 + (9*r) + value;
         int col = (81*2) + (9*c) + value;
-        int box = (81*3) + (9*((3*(r / 3)) + (c / 3))) + value; 
+        int box = (81*3) + (9*((3*Math.floorDiv(r, 3)) + Math.floorDiv(c, 3))) + value; 
 
         return new int[] {cell, row, col, box}; 
     }
@@ -132,5 +132,42 @@ public class SudokuSolver {
                 node.insertRight(first);
             }
         }
+    }
+
+    private void addToSolution(int val) {
+        int r = Math.floorDiv(val, 81); 
+        val %= 81; 
+        int c = Math.floorDiv(val, 9); 
+        val %= 9;
+        solution.setSquare(r, c, val);
+    }
+
+    public boolean solve() {
+        if (root.R == root) return true;
+        int val = 10000; 
+        DLXNode colhead = new DLXNode(); 
+        for (DLXNode node = root.R; node != root; node = node.R) {
+            if (node.value < val) {
+                colhead = node; 
+                val = node.value;
+            }
+        }
+        if (colhead.value == 0) return false;
+        colhead.cover();
+        // Loop through column
+        for (DLXNode row = colhead.D; row != colhead; row = row.D) {
+            for (DLXNode node = row.R; node != row; node = node.R) {
+                node.cover();
+            }
+            if (solve()) {
+                addToSolution(row.value);
+                return true;
+            }
+            for (DLXNode node = row.R; node != row; node = node.R) {
+                node.uncover();
+            }
+        }
+        colhead.uncover();
+        return false;
     }
 }
