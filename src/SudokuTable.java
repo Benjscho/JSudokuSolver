@@ -26,5 +26,21 @@ public class SudokuTable extends AbstractTableModel {
         return s.getSquare(rowIndex, columnIndex);
     } 
 
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return true;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        try {
+            int x = Integer.parseInt((String) aValue); 
+            if (x >= 0 && x <= 9) {
+                s.setSquare(rowIndex, columnIndex, x); 
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("No number in entry");
+        }
+    }
     
 }
