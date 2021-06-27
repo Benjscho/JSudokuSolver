@@ -5,6 +5,15 @@ public class Sudoku {
         this.grid = new int[9][9];
     }
 
+    public Sudoku(int[] s) {
+        int c = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                grid[i][j] = s[c++];
+            }
+        }
+    }
+
     public int[][] getSudoku() {
         return grid; 
     }
