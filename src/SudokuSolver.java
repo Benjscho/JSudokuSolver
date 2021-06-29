@@ -24,21 +24,31 @@ public class SudokuSolver {
         public int value;
         
         public DLXNode(int value) {
-            this.L = this.R = this.U = this.D = this.C = this; 
+            this.L = this; 
+            this.R = this; 
+            this.U = this; 
+            this.D = this; 
+            this.C = this; 
             this.value = value;
         }
 
         public DLXNode() {
-            this.L = this.R = this.U = this.D = this.C = this; 
+            this.L = this; 
+            this.R = this; 
+            this.U = this; 
+            this.D = this; 
+            this.C = this; 
             this.value = 0; 
         }
 
         public void insertRow() {
-            this.L.R = this.R.L = this; 
+            this.L.R = this;
+            this.R.L = this; 
         }
 
         public void insertCol() {
-            U.D = D.U = this;
+            U.D = this;
+            D.U = this;
             C.value++; 
         }
 
@@ -48,9 +58,9 @@ public class SudokuSolver {
         }
 
         public void removeCol() {
-            U.D = D;
-            D.U = U;
-            C.value--;
+            this.U.D = this.D;
+            this.D.U = this.U;
+            this.C.value--;
         }
 
         public void insertAbove(DLXNode node) {
@@ -69,7 +79,7 @@ public class SudokuSolver {
         public void cover() {
             this.C.removeRow();
             // Loop column
-            for (DLXNode n1 = this.D; n1 != this; n1 = n1.D) {
+            for (DLXNode n1 = this.C.D; n1 != this.C; n1 = n1.D) {
                 // Loop row
                 for (DLXNode n2 = n1.R; n2 != n1; n2 = n2.R) {
                     n2.removeCol();
@@ -80,7 +90,7 @@ public class SudokuSolver {
         public void uncover() {
             this.C.insertRow();
             // Loop column
-            for (DLXNode n1 = this.D; n1 != this; n1 = n1.D) {
+            for (DLXNode n1 = this.C.D; n1 != this.C; n1 = n1.D) {
                 // Loop row
                 for (DLXNode n2 = n1.R; n2 != n1; n2 = n2.R) {
                     n2.insertCol();
@@ -96,7 +106,7 @@ public class SudokuSolver {
     public void prepareSolution(Sudoku sudoku) {
         solution = new Sudoku(); 
 
-        ArrayList<DLXNode> columnObject = new ArrayList<>();
+        columnObject = new ArrayList<>();
         for (int i = 0; i < 4*81; i++) {
             columnObject.add(new DLXNode()); 
         }
@@ -151,7 +161,7 @@ public class SudokuSolver {
         val %= 81; 
         int c = Math.floorDiv(val, 9); 
         val %= 9;
-        solution.setSquare(r, c, val);
+        solution.setSquare(r, c, val+1);
     }
 
     public boolean solve() {

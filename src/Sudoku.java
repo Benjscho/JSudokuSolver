@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Sudoku {
     private int[][] grid; 
 
@@ -25,6 +27,22 @@ public class Sudoku {
         int c = 0;
         for (String i : s.split(",")) {
             grid[Math.floorDiv(c, 9)][c % 9] = Math.round(Float.parseFloat(i));
+            c++;
+        }
+    }
+
+    @Override 
+    public boolean equals(Object obj) {
+        if (obj instanceof Sudoku) {
+            Sudoku temp = (Sudoku) obj; 
+
+            if (Arrays.deepEquals(temp.getSudoku(), this.getSudoku())) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
         }
     }
 

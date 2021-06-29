@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 
 public class SudokuSolverTest {
 
-    
-
     @Test
     void testSudokus() {
         System.out.println("setup running");
@@ -35,8 +33,9 @@ public class SudokuSolverTest {
                 System.out.println("Files found.");
                 while ((puzzleLine = brPuzzle.readLine()) != null && (solutionLine = brSolution.readLine()) != null) {
                     puzzle = new Sudoku(puzzleLine); 
-                    solution = new Sudoku(solutionLine); 
-                    assertEquals(solution, solver.getSolution(puzzle));
+                    solution = solver.getSolution(puzzle);
+                    assertEquals(solution, new Sudoku(solutionLine));
+                    System.out.println("Solution correct.");
                 }
             } catch (FileNotFoundException e) {
                 System.out.println("File not found.");
