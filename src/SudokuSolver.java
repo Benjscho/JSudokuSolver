@@ -11,6 +11,14 @@ public class SudokuSolver {
     private ArrayList<DLXNode> columnObject;
     private DLXNode root; 
     
+    /**
+     * DLXNode inner class
+     * This class defines a dancing links node used in Algorithm X. A node can be 
+     * initialised either empty or with a value. A dancing links node represents
+     * a node on a grid. The node is doubly linked in each axis, so rows and 
+     * columns are represented by doubly linked lists. Each column has a header
+     * node whose value indicates a count of the nodes in the column. 
+     */
     private class DLXNode {
         public DLXNode L, R, U, D, C; 
         public int value;
@@ -81,7 +89,11 @@ public class SudokuSolver {
         }
     }
 
-    public SudokuSolver(Sudoku sudoku) {
+    public SudokuSolver() {
+
+    }
+
+    public void prepareSolution(Sudoku sudoku) {
         solution = new Sudoku(); 
 
         ArrayList<DLXNode> columnObject = new ArrayList<>();
@@ -169,5 +181,18 @@ public class SudokuSolver {
         }
         colhead.uncover();
         return false;
+    }
+
+    public Sudoku getSolution(Sudoku sudoku) {
+        prepareSolution(sudoku);
+        if (solve()) {
+            return solution; 
+        } else {
+            int[] n = new int[81];
+            for (int i = 0; i < 81; i++) {
+                n[i] = -1;
+            }
+            return new Sudoku(n);
+        }
     }
 }

@@ -26,7 +26,7 @@ public class GuiSudokuSolver{
 
         SudokuTable st = new SudokuTable();
         JTable table = new JTable(st);
-        mFrame.add(new JScrollPane(table));
+        mFrame.add(table);
 
         mFrame.pack();
         mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
