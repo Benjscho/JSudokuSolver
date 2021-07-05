@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * SudokuSolver class
@@ -103,7 +101,7 @@ public class SudokuSolver {
 
     }
 
-    public void prepareSolution(Sudoku sudoku) {
+    private void prepareSolution(Sudoku sudoku) {
         solution = new Sudoku(); 
 
         columnObject = new ArrayList<>();
@@ -164,7 +162,7 @@ public class SudokuSolver {
         solution.setSquare(r, c, val+1);
     }
 
-    public boolean solve() {
+    private boolean solve() {
         if (root.R == root) return true;
         int val = 10000; 
         DLXNode colhead = new DLXNode(); 

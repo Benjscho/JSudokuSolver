@@ -11,6 +11,14 @@ public class SudokuTable extends AbstractTableModel {
         this.s = new Sudoku(); 
     }
 
+    public Sudoku getSudoku() {
+        return s;
+    }
+
+    public void setSudoku(Sudoku new_s) {
+        s = new_s; 
+    }
+
     @Override
     public int getRowCount() {
         return 9;
